@@ -5,7 +5,7 @@ import * as path from 'node:path';
 import { configProvider } from './app.config.provider';
 import { FilmsModule } from './films/films.module';
 import { OrderModule } from './order/order.module';
-import { MongooseModule } from '@nestjs/mongoose';
+import { DatabaseModule } from './database/database.module';
 
 @Module({
   imports: [
@@ -13,7 +13,7 @@ import { MongooseModule } from '@nestjs/mongoose';
       isGlobal: true,
       cache: true,
     }),
-    MongooseModule.forRoot(configProvider.useValue.database.url, {}),
+    DatabaseModule,
     FilmsModule,
     OrderModule,
     ServeStaticModule.forRoot({
