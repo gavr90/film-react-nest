@@ -11,12 +11,8 @@ export class FilmsService {
     private filmsRepository: Repository<Film>,
   ) {}
 
-  async find(): Promise<{ total: number; items: Film[] }> {
-    const [total, items] = await Promise.all([
-      this.filmsRepository.count(),
-      this.filmsRepository.find({ relations: { schedule: true } }),
-    ]);
-
+  async find(): Promise<{ items: Film[]; total: number }> {
+    const [items, total] = await this.filmsRepository.findAndCount();
     return { total, items };
   }
 
