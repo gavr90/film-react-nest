@@ -4,14 +4,22 @@ import {
   NotFoundException,
 } from '@nestjs/common';
 import { CreateOrderDto } from './dto/order.dto';
-import { FilmsRepository } from 'src/repository/films.repository';
+import { InjectRepository } from '@nestjs/typeorm';
+import { Film } from 'src/films/entities/film.entity';
+import { Repository } from 'typeorm';
 
 @Injectable()
 export class OrderService {
-  constructor(private readonly filmsRepository: FilmsRepository) {}
+  constructor(
+    @InjectRepository(Film)
+    private readonly filmsRepository: Repository<Film>,
+  ) {}
 
   private async getSelectedFilm(id: string) {
-    const selectedFilm = this.filmsRepository.findOne({ id });
+    const selectedFilm = await this.filmsRepository.findOne({
+      where: { id: id },
+      relations: { schedule: true },
+    });
     return selectedFilm;
   }
 
@@ -40,11 +48,15 @@ export class OrderService {
 
         const selectedSeat = `${row}:${seat}`;
 
-        if (selectedSession.taken.includes(selectedSeat)) {
+        const isTaken = selectedSession.taken?.split(',');
+
+        if (isTaken.includes(selectedSeat)) {
           throw new BadRequestException('Место недоступно для бронирования');
         } else {
-          selectedSession.taken.push(selectedSeat);
-          selectedFilm.save();
+          selectedSession.taken = selectedSession.taken
+            ? `${selectedSession.taken},${selectedSeat}`
+            : selectedSeat;
+          this.filmsRepository.save(selectedFilm);
         }
       });
     }
