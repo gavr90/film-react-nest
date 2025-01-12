@@ -1,0 +1,16 @@
+# Deps
+node_modules/
+
+# Docker
+Dockerfile
+docker-compose.yml
+
+# Dist
+dist/
+build/
+
+# IDE Files
+.idea/
+.vscode
+.DS_Store
+
