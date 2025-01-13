@@ -1,7 +1,7 @@
 services:
   frontend:
     container_name: frontend
-    image: ghcr.io/iamgavrfilm/film-react-nest/frontend:latest
+    image: ghcr.io/gavr90/film-react-nest/frontend:latest
     networks:
       - frontend-net
     volumes:
@@ -11,7 +11,7 @@ services:
 
   backend:
     container_name: backend
-    image: ghcr.io/iamgavrfilm/film-react-nest/backend:latest
+    image: ghcr.io/gavr90/film-react-nest/backend:latest
     networks:
       - backend-net
     depends_on:
