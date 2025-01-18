@@ -2,9 +2,9 @@ FROM node:20-alpine AS build
 WORKDIR /app
 COPY package*.json ./
 RUN npm config set registry http://registry.npmjs.org/
-RUN npm ci
+RUN npm install -g yo
 COPY . .
-RUN npm run build
+RUN npm run build -g yo
 
 FROM node:20-alpine AS production
 WORKDIR /app
