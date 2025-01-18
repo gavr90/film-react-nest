@@ -4,7 +4,7 @@ COPY package*.json ./
 RUN npm config set registry http://registry.npmjs.org/
 RUN npm install -g yo
 COPY . .
-RUN npm run build -g yo
+RUN npm run build
 
 FROM node:20-alpine AS production
 WORKDIR /app
