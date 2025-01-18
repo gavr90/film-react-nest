@@ -28,7 +28,7 @@ services:
     container_name: postgres
     image: postgres:17.2-alpine3.21
     volumes:
-      - ./docker-init.sql:/docker-entrypoint-initdb.d/docker-init.sql
+      - ./1_postgres.init.sql:/docker-entrypoint-initdb.d/1_postgres.init.sql
       - postgres_data:/var/lib/postgresql/data
     networks:
       - backend-net
