@@ -1,6 +1,6 @@
 import { Entity, Column, PrimaryGeneratedColumn, ManyToOne } from 'typeorm';
 import { Film } from './film.entity';
-import { IsNumber, IsString } from 'class-validator';
+import { IsDate, IsNumber, IsString } from 'class-validator';
 
 @Entity('schedules')
 export class Schedule {
@@ -8,7 +8,7 @@ export class Schedule {
   id: string;
 
   @Column()
-  @IsString()
+  @IsDate()
   daytime: Date;
 
   @Column()
