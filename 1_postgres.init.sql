@@ -1,8 +1,3 @@
-create database film_db
-    with owner postgres;
-
-/c film_db
-
 CREATE EXTENSION IF NOT EXISTS "uuid-ossp";
 
 create table public.films
