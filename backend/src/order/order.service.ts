@@ -5,7 +5,7 @@ import {
 } from '@nestjs/common';
 import { CreateOrderDto } from './dto/order.dto';
 import { InjectRepository } from '@nestjs/typeorm';
-import { Film } from 'src/films/entities/film.entity';
+import { Film } from '../films/entities/film.entity';
 import { Repository } from 'typeorm';
 
 @Injectable()

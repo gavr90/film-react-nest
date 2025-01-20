@@ -1,0 +1,83 @@
+services:
+  frontend:
+    container_name: frontend
+    build:
+      context: ./frontend
+      dockerfile: Dockerfile
+    networks:
+      - frontend-net
+    volumes:
+      - frontend_dist:/app/dist
+    env_file:
+      - frontend/.env
+
+  backend:
+    container_name: backend
+    build:
+      context: ./backend
+      dockerfile: Dockerfile
+    networks:
+      - backend-net
+    depends_on:
+      - postgres
+    env_file:
+      - backend/.env
+    restart: unless-stopped
+
+  postgres:
+    container_name: postgres
+    image: postgres:17.2-alpine3.21
+    volumes:
+      - ./1_postgres.init.sql:/docker-entrypoint-initdb.d/1_postgres.init.sql
+      - postgres_data:/var/lib/postgresql/data
+    networks:
+      - backend-net
+    env_file:
+      - backend/.env
+    restart: unless-stopped
+
+  pgadmin:
+    container_name: pgadmin_container
+    image: dpage/pgadmin4:8.14
+    volumes:
+      - pgadmin_data:/var/lib/pgadmin
+    ports:
+      - 8080:80
+    networks:
+      - backend-net
+    depends_on:
+      - postgres
+    env_file:
+      - backend/.env
+    deploy:
+        resources:
+          limits:
+            cpus: '0.5'
+            memory: 1G
+    restart: unless-stopped
+
+  nginx:
+    container_name: nginx
+    image: nginx:latest
+    ports:
+      - 80:80
+      - 443:443
+    networks:
+      - frontend-net
+      - backend-net
+    restart: always
+    volumes:
+      - ./nginx/nginx.local.conf:/etc/nginx/nginx.conf:ro
+      - ./certs:/etc/nginx/certs:ro
+      - frontend_dist:/var/www/frontend:ro
+    depends_on:
+      - frontend
+
+volumes:
+  postgres_data:
+  pgadmin_data:
+  frontend_dist:
+
+networks:
+  backend-net:
+  frontend-net:

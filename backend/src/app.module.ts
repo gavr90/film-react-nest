@@ -18,7 +18,7 @@ import { DatabaseModule } from './database/database.module';
     OrderModule,
     ServeStaticModule.forRoot({
       rootPath: path.join(__dirname, '..', 'public'),
-      renderPath: 'content/afisha/',
+      renderPath: '/content/afisha/',
     }),
   ],
   controllers: [],
