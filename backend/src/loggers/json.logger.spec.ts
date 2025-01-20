@@ -16,12 +16,11 @@ describe('JsonLogger', () => {
 
   it('should be console message in json format', () => {
     const testMessage = 'json test message';
-    const testParams = 'test params';
     logger.log(testMessage);
     const expected = JSON.stringify({
       level: testLevel,
       message: testMessage,
-      optionalParams: [testParams],
+      optionalParams: [],
     });
     expect(mock).toHaveBeenCalledWith(expected);
   });

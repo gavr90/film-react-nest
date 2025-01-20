@@ -34,6 +34,6 @@ describe('FilmsController', () => {
   it('should call FilmsService.findOne with test_id', async () => {
     const film = await controller.findOne('test_id');
     expect(film).toEqual([{ id: 'test_id' }]);
-    expect(service.find).toHaveBeenCalledWith('test_id');
+    expect(service.findOne).toHaveBeenCalledWith('test_id');
   });
 });

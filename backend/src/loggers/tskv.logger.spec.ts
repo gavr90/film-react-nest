@@ -16,7 +16,7 @@ describe('TskvLogger', () => {
 
   it('should be console message in json format', () => {
     const testMessage = 'json test message';
-    const testParams = 'test params';
+    const testParams = [];
     logger.log(testMessage);
     const expected = `level=${testLevel}\tmessage=${testMessage}\toptionalParams=${testParams}\n`;
     expect(mock).toHaveBeenCalledWith(expected);

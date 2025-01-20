@@ -67,7 +67,11 @@ describe('OrderController', () => {
       phone: '71234567890',
       tickets: tickets,
     });
-    expect(order).toEqual({ total: 2, tickets });
+    expect(order).toEqual({
+      email: 'test@test.ru',
+      phone: '71234567890',
+      tickets: tickets,
+    });
     expect(service.create).toHaveBeenCalledWith({
       email: 'test@test.ru',
       phone: '71234567890',
